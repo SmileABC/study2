@@ -1,0 +1,402 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<h3>
+	认购未换签明细表
+</h3>
+<div class="panel panel-default">
+	<div class="panel-body">
+		<div class="row form-horizontal marbot7">
+			 <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">城市公司</label>
+
+                            <div class="col-sm-8">
+                                <select class="form-control" ng-model="cityId" ng-change="SummaryMode.initProjectCommpany()">
+	                                <option ng-repeat="city in cityList" value="{{city.CITYID}}">
+	                                    {{city.CITYNAME}}
+	                                </option>
+	                            </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">项目公司</label>
+                            <div class="col-sm-8">
+	                            <select class="form-control" ng-model="orgId" ng-change="SummaryMode.initProject()">
+	                                <option ng-repeat="projectCompany in projectCompanyList" value="{{projectCompany.ORGID}}">
+	                                    {{projectCompany.ORGNAME}}
+	                                </option>
+	                            </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">项目</label>
+
+                           <div class="col-sm-8">
+	                            <select class="form-control" ng-model="projectId" ng-change="SummaryMode.initProjectPeriod()">
+	                                <option ng-repeat="project in projectList" value="{{project.PROJECTID}}">
+	                                    {{project.PROJECTNAME}}
+	                                </option>
+	                            </select>
+                            </div>
+                        </div>
+                    </div>
+					<div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">项目分期</label>
+
+                           <div class="col-sm-8">
+	                            <select class="form-control" ng-model="periodId">
+	                                <option ng-repeat="projectPeriod in projectPeriodList" value="{{projectPeriod.PERIODID}}">
+	                                    {{projectPeriod.PERIODNAME}}
+	                                </option>
+	                            </select>
+                            </div>
+                        </div>
+                    </div>
+			 		<div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">业态类型</label>
+                            <div class="col-sm-8">
+                            	<select class="form-control" ng-model="houseUseName">
+	                                <option selected>请选择</option>
+									<option ng-repeat="houseUseName in houseUseNameList" value="{{houseUseName}}">
+										{{houseUseName}}
+									</option>
+	                            </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">统计日期</label>
+                            <div class="col-md-8 section-block">
+                                <div>
+                                    <date-picker model="beginDate" clearbtn='false'></date-picker>
+                                </div>
+                                <span>至</span>
+                                <div>
+                                    <date-picker model="endDate" clearbtn='false'></date-picker>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+			 
+			 		<div class="col-md-12 text-right">
+                        <button type="button" class="btn btn-primary" ng-click="search()">
+                            <span class="fa fa-search"></span> 查询
+                        </button>
+                    </div>
+			 	</div>
+	
+		
+		<div class="search-box">
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-default pull-right collapsed"
+                            data-toggle="collapse" href="#collapseBox">
+                        <i class="fa fa-chevron-up"></i>字段选项
+                    </button>
+                </div>
+            </div>
+            <div id="collapseBox" class="collapse">
+                <div class="row form-horizontal marbot7">
+                    <div class="col-md-12">
+                        <span class="title">高级搜索</span>
+                    </div>
+					<!-- 需要加的地方 -->
+					<div class="col-md-12">
+						<label><input type="checkbox" id="every" ng-model="selectAll" ng-click="all(selectAll)"/>  全选</label>
+                        
+                    </div>
+					
+<!-- 字段选择显示/隐藏 -->
+ 					
+					<div class="col-md-2">
+						<label><input type="checkbox" ng-checked="selectAll" ng-model="signDate" name="choose" ng-click="test()"/> 签约日期</label>
+					</div>
+				
+					<div class="col-md-2">
+						<label><input type="checkbox" ng-checked="selectAll" ng-model="houseName" name="choose" ng-click="test()"/> 户型名称</label>
+					</div>
+					
+                    <div class="col-md-2">
+						<label><input type="checkbox" ng-checked="selectAll" ng-model="downPaymentRatio" name="choose" ng-click="test()"/> 合同首付比率(%)</label>
+					</div>
+					<div class="col-md-2">
+						<label><input type="checkbox" ng-checked="selectAll" ng-model="downPayment" name="choose" ng-click="test()"/> 首付金额</label>
+					</div>
+					<!--  <div class="col-md-2">
+						<label><input type="checkbox" ng-model="reDownPayment" name="choose" ng-click="test()"/> 已收首付</label>
+					</div>-->
+					<div class="col-md-2">
+						<label><input type="checkbox" ng-checked="selectAll" ng-model="noDownPayment" name="choose" ng-click="test()"/> 未收首付</label>
+					</div>
+					<div class="col-md-2">
+						<label><input type="checkbox" ng-checked="selectAll" ng-model="reDownPaymentRatio" name="choose" ng-click="test()"/> 已收首付比率(%)</label>
+					</div>
+					<div class="col-md-2">
+						<label><input type="checkbox" ng-checked="selectAll" ng-model="othPrice" name="choose" ng-click="test()"/> 其他收款</label>
+					</div>
+					<div class="col-md-2">
+						<label><input type="checkbox" ng-checked="selectAll" ng-model="oneTimeNoPay" name="choose" ng-click="test()"/> 一次性付款未收金额</label>
+					</div>
+					<div class="col-md-2">
+						<label><input type="checkbox" ng-checked="selectAll" ng-model="oneTimePay " name="choose" ng-click="test()"/> 一次性付款已收金额</label>
+					</div>
+					<div class="col-md-2">
+						<label><input type="checkbox" ng-checked="selectAll" ng-model="disposableTail" name="choose" ng-click="test()"/> 一次性尾款</label>
+					</div>
+					<div class="col-md-2">
+								 		<label><input type="checkbox" ng-checked="selectAll" ng-model="mortgageAmount" name="choose" ng-click="test()"/> 按揭金额</label>
+								 	</div>
+								 	<div class="col-md-2">
+								 		<label><input type="checkbox" ng-checked="selectAll" ng-model="mortgageBank" name="choose" ng-click="test()"/> 按揭银行</label>
+								 	</div>
+								 	<div class="col-md-2">
+								 		<label><input type="checkbox" ng-checked="selectAll" ng-model="doMortgageDate" name="choose" ng-click="test()"/> 办理按揭日期</label>
+								 	</div>
+								 	<div class="col-md-2">
+								 		<label><input type="checkbox" ng-checked="selectAll" ng-model="mortgageAmountRe" name="choose" ng-click="test()"/> 按揭到帐金额</label>
+								 	</div>
+								 	<div class="col-md-2">
+								 		<label><input type="checkbox" ng-checked="selectAll" ng-model="mortgageDateRe" name="choose" ng-click="test()"/> 按揭到帐日期</label>
+								 	</div>
+								 	<div class="col-md-2">
+								 		<label><input type="checkbox" ng-checked="selectAll" ng-model="areaSeekingRe" name="choose" ng-click="test()"/> 面积补差应收</label>
+								 	</div>
+								 	<div class="col-md-2">
+								 		<label><input type="checkbox" ng-checked="selectAll" ng-model="areaSeekingYi" name="choose" ng-click="test()"/> 面积补差已收</label>
+								 	</div>
+								 	<div class="col-md-2">
+								 		<label><input type="checkbox" ng-checked="selectAll" ng-model="titleHolder" name="choose" ng-click="test()"/> 回款金额</label>
+								 	</div>
+								 	<div class="col-md-2">
+								 		<label><input type="checkbox" ng-checked="selectAll" ng-model="amountNotRe" name="choose" ng-click="test()"/> 未收总金额</label>
+								 	</div>
+								 	<div class="col-md-2">
+								 		<label><input type="checkbox" ng-checked="selectAll" ng-model="handDate" name="choose" ng-click="test()"/> 交房日期</label>
+								 	</div>
+								 	<div class="col-md-2">
+								 		<label><input type="checkbox" ng-checked="selectAll" ng-model="settlementPrice" name="choose" ng-click="test()"/> 结算单价</label>
+								 	</div>
+								 	<div class="col-md-2">
+								 		<label><input type="checkbox" ng-checked="selectAll" ng-model="settlementArea" name="choose" ng-click="test()"/> 结算面积</label>
+								 	</div>
+								 	<div class="col-md-2">
+								 		<label><input type="checkbox" ng-checked="selectAll" ng-model="actualArea" name="choose" ng-click="test()"/> 实测建筑面积</label>
+								 	</div>
+								 	<div class="col-md-2">
+								 		<label><input type="checkbox" ng-checked="selectAll" ng-model="actualInnerArea" name="choose" ng-click="test()"/> 实测套内建筑面积</label>
+								 	</div>
+								 	<div class="col-md-2">
+								 		<label><input type="checkbox" ng-checked="selectAll" ng-model="actualCommonrArea" name="choose" ng-click="test()"/> 实测公共面积</label>
+								 	</div>	 			 	
+								 	<div class="col-md-2">
+								 		<label><input type="checkbox" ng-checked="selectAll" ng-model="reserveAreaAmount" name="choose" ng-click="test()"/> 面积补差金额</label>
+								 	</div>
+								 	<div class="col-md-2">
+								 		<label><input type="checkbox" ng-checked="selectAll" ng-model="settlementTotalPrice " name="choose" ng-click="test()"/> 结算总价</label>
+								 	</div>
+                    <!-- <div class="col-md-12 text-right">
+                        <button type="button" ng-click="jumpIndexPage()"
+                                class="btn btn-primary">
+                            <i class="fa fa-search"> 搜索</i>
+                        </button>
+                    </div> -->
+                </div>
+            </div>
+
+        </div>		
+		<!-- 表格开始 -->
+		<div class="row">
+			<div class="col-md-12">
+				<a type="button"  class="mb-sm btn btn-success" ng-click = "exportExcel()">
+					<i class="fa fa-plus"></i>
+					导出
+				</a>
+			</div>
+			<form action="pc/report/orderNotChange/exportExcel" class="pull-left"  id="exportSaleDailyForm" method="POST">
+				<input type="hidden" id="model" name="model" value="">
+		   </form>
+			<div class="col-md-12">
+				<div class="auto-flow"  fixed-rows="0">
+					
+					<table class="table table-bordered table-primary tree-grid">
+						<thead>
+							<tr>
+								<th class="th4" rowspan="2">序号</th>
+								<th class="th6" colspan="6">认购基本情况</th>
+								<th class="th6" colspan="13">房屋情况</th>
+								<th class="th6" colspan="6">首付情况</th>
+								<th class="th6" colspan="3">一次性付款情况</th>
+								<th class="th6" colspan="5">贷款情况</th>
+								<th class="th6" colspan="4">回款情况</th>
+								<th class="th6" colspan="1">入住情况</th>
+								<th class="th6" colspan="7">面积补差</th>
+								<th class="th6" colspan="4">其他</th>
+							</tr>
+							<tr>
+								<th class="th6" >认购日期</th>
+								<th class="th6" >认购书编号</th>
+								<th class="th6" ng-show="signDate">签约日期</th>
+								<th class="th6" >销售状态</th>
+								<th class="th6" >客户名称</th>
+								<th class="th9" >联系电话</th>
+								
+								
+								<th class="th6" >楼栋</th>
+								<th class="th9" >房间全称</th>
+								<th class="th4" >业态类型</th>
+								<th class="th4" >付款方式</th>	
+								<th class="th6" >认购总价</th>
+								<th class="th4" >建筑面积</th>
+								<th class="th4" >套内建筑面积</th>
+								<th class="th4" >建筑面积单价</th>
+								<th class="th4" >套内建筑面积单价</th>
+								<th class="th4" >公共面积</th>
+								<th class="th6" >折扣表达式</th>
+								<th class="th4" >优惠价</th>
+								<th class="th6" ng-show="houseName">户型名称</th>
+								
+								<th class="th4" ng-show="downPaymentRatio">合同首付比率(%)</th>
+								<th class="th4" ng-show="downPayment">首付金额</th>
+								<th class="th4">已收首付</th>
+								<th class="th4" ng-show="noDownPayment">未收首付</th>
+								<th class="th4" ng-show="reDownPaymentRatio">已收首付比率(%)</th>
+								<th class="th6" ng-show="othPrice">其他收款</th>
+								
+								
+								
+								<th class="th6" ng-show="oneTimeNoPay">一次性付款未收金额</th>
+								<th class="th6" ng-show="oneTimePay">一次性付款已收金额</th>
+								<th class="th6" ng-show="disposableTail">一次性尾款</th>
+								
+								<th class="th6" ng-show="mortgageAmount">按揭金额</th>
+								<th class="th6" ng-show="mortgageBank">按揭银行</th>
+								<th class="th4" ng-show="doMortgageDate">办理按揭日期</th>
+								<th class="th6" ng-show="mortgageAmountRe">按揭到帐金额</th>
+								<th class="th4" ng-show="mortgageDateRe">按揭到帐日期</th>
+								
+								<th class="th6" ng-show="areaSeekingRe">面积补差应收</th>
+								<th class="th6" ng-show="areaSeekingYi">面积补差已收</th>
+								<th class="th6" ng-show="titleHolder">回款金额</th>
+								<th class="th6" ng-show="amountNotRe">未收总金额</th>
+								
+								<th class="th4" ng-show="handDate">交房日期</th>
+								
+								<th class="th4" ng-show="settlementPrice">结算单价</th>
+								<th class="th4" ng-show="settlementArea">结算面积</th>
+								<th class="th4" ng-show="actualArea">实测建筑面积</th>
+								<th class="th4" ng-show="actualInnerArea">实测套内建筑面积</th>
+								<th class="th4" ng-show="actualCommonrArea">实测公共面积</th>
+								<th class="th6" ng-show="reserveAreaAmount">面积补差金额</th>
+								<th class="th6" ng-show="settlementTotalPrice">结算总价</th>
+								
+								<th class="th4">销售均价</th>
+								<th class="th9" >证件号码</th>
+								<th class="th6" >联系地址</th>
+								<th class="th4">业务员</th>
+								
+							</tr>
+			
+						</thead>
+						<!-- <tbody tree-grid tree-data="tree_data1" col-defs= "col_defs"
+		                    on-select = "Select(branch)"
+		                    on-click = "Click(branch)">
+		                </tbody> -->
+						<tbody>
+						<tr ng-repeat="orderNotChange in orderNotChangeList">
+							<td>{{$index+1}}</td>
+							<td>{{orderNotChange.SignContractDate}}</td>
+							<td>{{orderNotChange.SubscribeNo}}</td>
+							<td>空</td>
+							<td>认购</td>
+							<td>{{orderNotChange.CustomerName}}</td>
+							<td>{{orderNotChange.FirstTelephone}}</td>
+							<td>{{orderNotChange.Building}}</td>
+							<td>{{orderNotChange.HouseName}}</td>
+							<td>{{orderNotChange.HouseUseName}}</td>
+							<td>{{orderNotChange.PaymentMethod}}</td>
+							<td>{{orderNotChange.TotalPrices | currency:""}}</td>
+							<td>{{orderNotChange.ConstructionArea}}</td>
+							<td>{{orderNotChange.UseArea}}</td>
+							<td>{{orderNotChange.ConstructionAreaUnitPrice}}</td>
+							<td>{{orderNotChange.UseAreaUnitPrice}}</td>
+							<td>{{orderNotChange.PublicArea}}</td>
+							<td>{{orderNotChange.DiscountExpression}}</td>
+							<td>{{orderNotChange.SaleTotalPrices | currency:""}}</td>
+							<td>{{orderNotChange.HouseTypeName}}</td>
+							<td>{{orderNotChange.FirstPayRatio}}</td>
+							<td>{{orderNotChange.FirstPaymentAmount}}</td>
+							<td>{{orderNotChange.FirstPayed}}</td>
+							<td>{{(orderNotChange.FirstPaymentAmount - orderNotChange.FirstPayed)}}</td>
+							<td>
+								<span ng-if="orderNotChange.FirstPaymentAmount==0">0</span>
+								<span ng-if="orderNotChange.FirstPaymentAmount!=0">{{(orderNotChange.FirstPayed/orderNotChange.FirstPaymentAmount)*100}}%</span>
+							</td>
+							<td>{{orderNotChange.PaymentAmount}}</td>
+							<td>{{orderNotChange.NotPaymentAmount}}</td>
+							<td>{{orderNotChange.PaymentAmount}}</td>
+							<td>{{orderNotChange.PayOff}}</td>
+							<td>{{orderNotChange.MortgageToAccountAmount}}</td>
+							<td>空</td>
+							<td>空</td>
+							<td>{{orderNotChange.BackMoney}}</td>
+							<td>空</td>
+							<td>{{orderNotChange.AreaCompensateMoney}}</td>
+							<td>{{orderNotChange.AreaCompensateMoneyPaid}}</td>
+							<td>{{(orderNotChange.SaleTotalPrices - orderNotChange.NotBackMoney)}}</td>
+							<td>{{orderNotChange.NotBackMoney | currency:""}}</td>
+							<td>{{orderNotChange.GiveHouseTime}}</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>{{orderNotChange.SaleUnitPrice | currency:""}}</td>
+							<td>{{orderNotChange.CardID}}</td>
+							<td>{{orderNotChange.Address}}</td>
+							<td>{{orderNotChange.Operator}}</td>
+						</tr>
+						</tbody>
+		               
+					</table>
+				</div>
+			</div>
+			<div class="paging col-md-12">
+				<div class="paging-cfg">
+					跳转至：<input type="number" ng-model="offset" ng-change="jumpToPage(pageSize,offset)"> / <span>{{allPage}}</span>页
+				</div>
+				<div class="paging-cfg">
+					当前显示：
+					<select ng-model="pageSize" ng-change="pageJump(pageSize,offset)">
+						<option value="5">5</option>
+						<option value="10">10</option>
+						<option value="20">20</option>
+					</select> 条，
+					共<span>{{count}}</span>条
+				</div>
+				<div class="btn-group">
+					<button type="button" class="btn btn-default" id="addProductButton"
+							ng-click="jumpIndexPage(pageSize,offset)">首页
+					</button>
+					<button type="button" class="btn btn-default" id="addProductButton"
+							ng-click="jumpUpPage(pageSize,offset)">上一页
+					</button>
+					<button type="button" class="btn btn-default" id="addProductButton"
+							ng-click="jumpDwonPage(pageSize,offset)">下一页
+					</button>
+					<button type="button" class="btn btn-default" id="addProductButton"
+							ng-click="jumpLastPage(pageSize,offset)">末页
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
